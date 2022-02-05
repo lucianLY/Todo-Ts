@@ -1,6 +1,12 @@
 import $ from 'jquery'
 import { ITodoData } from './typings'
 
+/**
+ * 装饰器有三个参数
+ * @param target 
+ * @param methodName 
+ * @param descriptor 
+ */
 export function getTodoList (
   target: any,
   methodName: string,
