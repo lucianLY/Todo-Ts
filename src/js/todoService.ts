@@ -47,3 +47,24 @@ export function removeTodo(
     })
   }
 }
+
+/**
+ * 
+ * @param target 
+ * @param methodName 
+ * @param descriptor 
+ */
+export function toggleTodo(
+  target: any,
+  methodName: string,
+  descriptor: PropertyDescriptor
+){
+// 保存原有的  toggleTodo
+const _orgin = descriptor.value
+
+descriptor.value = function (target: HTMLElement, id: number) {
+  $.post('http://localhost:8080/toggle', { id }).then((res: string) => {
+    _orgin.call(this, target, id)
+  })
+}
+}
