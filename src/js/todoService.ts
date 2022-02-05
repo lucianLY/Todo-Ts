@@ -7,12 +7,11 @@ import { ITodoData } from './typings'
  * @param methodName 
  * @param descriptor 
  */
-export function getTodoList (
+export function getTodoList(
   target: any,
   methodName: string,
   descriptor: PropertyDescriptor
-) {
-  console.log(target, methodName, descriptor)
+): void {
   // 保存原有的 init 函数
   const _orgin = descriptor.value
   // 重写 init 函数
@@ -20,10 +19,31 @@ export function getTodoList (
     $.get('http://localhost:8080/').then((res: string) => {
       if (!res) {
         return
-      } 
+      }
       todoData = JSON.parse(res)
     }).then(() => {
       _orgin.call(this, todoData)
+    })
+  }
+}
+
+/**
+ * 
+ * @param target 
+ * @param methodName 
+ * @param descriptor 
+ */
+export function removeTodo(
+  target: any,
+  methodName: string,
+  descriptor: PropertyDescriptor
+): void {
+  // 保存原有的  removeTodo
+  const _orgin = descriptor.value
+
+  descriptor.value = function (target: HTMLElement, id: number) {
+    $.post('http://localhost:8080/remove', { id }).then((res: string) => {
+      _orgin.call(this, target, id)
     })
   }
 }

@@ -1,7 +1,7 @@
 import TodoDom from "./todoDom"
-import {ITodoData} from "./typings"
+import { ITodoData } from "./typings"
 import addItem from './todoDom'
-import {getTodoList} from './todoService'
+import { getTodoList, removeTodo } from './todoService'
 
 class TodoEvent extends TodoDom {
   private todoData: ITodoData[]
@@ -14,13 +14,13 @@ class TodoEvent extends TodoDom {
 
   // 装饰器 先请求数据 再把数据传给init 
   @getTodoList
-  protected init (todoData: ITodoData[]) {
+  protected init(todoData: ITodoData[]) {
     this.todoData = todoData
     this.initList(this.todoData)
   }
 
-  public addTodo (todo: ITodoData): undefined | number {
-    const _todo = this.todoData.find( (item: ITodoData) => item.content === todo.content)
+  public addTodo(todo: ITodoData): undefined | number {
+    const _todo = this.todoData.find((item: ITodoData) => item.content === todo.content)
     if (!_todo) {
       this.todoData.push(todo)
       this.addItem(todo)
@@ -29,14 +29,15 @@ class TodoEvent extends TodoDom {
     return 1001
   }
 
-  public removeTodo (target: HTMLElement, id: number): void {
-    this.todoData = this.todoData.filter( (item: ITodoData) => item.id !== id)
+  @removeTodo
+  public removeTodo(target: HTMLElement, id: number): void {
+    this.todoData = this.todoData.filter((item: ITodoData) => item.id !== id)
     this.removeItem(target)
   }
 
-  public toggleCompleted (target: HTMLElement, id: number): void {
-    this.todoData = this.todoData.map( (item: ITodoData) => {
-      if (item.id === id ) {
+  public toggleCompleted(target: HTMLElement, id: number): void {
+    this.todoData = this.todoData.map((item: ITodoData) => {
+      if (item.id === id) {
         item.completed = !item.completed
       }
       return item
