@@ -1,7 +1,7 @@
 import TodoDom from "./todoDom"
 import { ITodoData } from "./typings"
 import addItem from './todoDom'
-import { getTodoList, removeTodo, toggleTodo } from './todoService'
+import { getTodoList, addTodo, removeTodo, toggleTodo } from './todoService'
 
 class TodoEvent extends TodoDom {
   private todoData: ITodoData[]
@@ -19,6 +19,7 @@ class TodoEvent extends TodoDom {
     this.initList(this.todoData)
   }
 
+  @addTodo
   public addTodo(todo: ITodoData): undefined | number {
     const _todo = this.todoData.find((item: ITodoData) => item.content === todo.content)
     if (!_todo) {

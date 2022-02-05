@@ -25,7 +25,7 @@ import TodoEvent from './js/todoEvent'
     const val: string = oInput.value.trim()
     if (val.length) {
       const result = todoEvent.addTodo(<ITodoData>{
-        id: new Date.getTime(),
+        id: new Date().getTime(),
         content: val,
         completed: true
       })

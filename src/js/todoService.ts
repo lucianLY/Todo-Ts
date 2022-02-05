@@ -58,13 +58,32 @@ export function toggleTodo(
   target: any,
   methodName: string,
   descriptor: PropertyDescriptor
-){
-// 保存原有的  toggleTodo
-const _orgin = descriptor.value
+) {
+  // 保存原有的  toggleTodo
+  const _orgin = descriptor.value
 
-descriptor.value = function (target: HTMLElement, id: number) {
-  $.post('http://localhost:8080/toggle', { id }).then((res: string) => {
-    _orgin.call(this, target, id)
-  })
+  descriptor.value = function (target: HTMLElement, id: number) {
+    $.post('http://localhost:8080/toggle', { id }).then((res: string) => {
+      _orgin.call(this, target, id)
+    })
+  }
 }
+
+export function addTodo(
+  target: any,
+  methodName: string,
+  descriptor: PropertyDescriptor
+): void {
+  // 保存原有的  add
+  const _orgin = descriptor.value
+  const content = 
+  descriptor.value = function (todo: ITodoData) {
+    $.post('http://localhost:8080/add', {todo: JSON.stringify(todo)}).then((res: string) => {
+      if (res.status === 100) {
+        alert('内容已存在')
+        return
+      }
+      _orgin.call(this, todo)
+    })
+  }
 }

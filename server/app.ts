@@ -46,8 +46,24 @@ app.post('/remove', function (req, res) {
   })
 })
 
-app.get('/add', function (req, res) {
-  const id: number = parseInt(req.body.id)
+app.post('/add', function (req, res) {
+  const data: ITodoData = JSON.parse(req.body.todo)
+  fileOperation('todo.json', function (todoList: ITodoData[]){
+    const isExit = todoList.find( (item: ITodoData) => item.content === data.content)
+    if(isExit) {
+      res.send({
+        status: 100,
+        message: 'error'
+      })
+      return
+    }
+    return todoList.concat(data)
+  })
+
+  res.send({
+    status: 200,
+    message: 'success'
+  })
   
 })
 
