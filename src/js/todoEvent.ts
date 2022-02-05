@@ -1,6 +1,7 @@
 import TodoDom from "./todoDom"
 import {ITodoData} from "./typings"
 import addItem from './todoDom'
+import {getTodoList} from './todoService'
 
 class TodoEvent extends TodoDom {
   private todoData: ITodoData[]
@@ -8,10 +9,13 @@ class TodoEvent extends TodoDom {
   constructor(todoData: ITodoData[], todoWapper: HTMLElement) {
     super(todoWapper)
     this.todoData = todoData
-    this.init()
+    this.init(this.todoData)
   }
 
-  protected init () {
+  // 装饰器 先请求数据 再把数据传给init 
+  @getTodoList
+  protected init (todoData: ITodoData[]) {
+    this.todoData = todoData
     this.initList(this.todoData)
   }
 
