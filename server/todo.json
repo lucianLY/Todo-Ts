@@ -1,7 +1,1 @@
-[
-  {
-    "id": 1,
-    "content": "张三",
-    "completed": true
-  }
-]
+[{"id":1,"content":"张三","completed":true}]
