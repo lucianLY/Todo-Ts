@@ -8,13 +8,18 @@ class TodoEvent extends TodoDom {
   constructor(todoData: ITodoData[], todoWapper: HTMLElement) {
     super(todoWapper)
     this.todoData = todoData
+    this.init()
+  }
+
+  protected init () {
+    this.initList(this.todoData)
   }
 
   public addTodo (todo: ITodoData): undefined | number {
-    const _todo = this.todoData.find( (item: ITodoData) => item.content === todo.content )
-    if ( !_todo ) {
+    const _todo = this.todoData.find( (item: ITodoData) => item.content === todo.content)
+    if (!_todo) {
       this.todoData.push(todo)
-      this.addItem(_todo)
+      this.addItem(todo)
       return
     }
     return 1001
@@ -22,10 +27,10 @@ class TodoEvent extends TodoDom {
 
   public removeTodo (target: HTMLElement, id: number): void {
     this.todoData = this.todoData.filter( (item: ITodoData) => item.id !== id)
-    // this.removeItem(target, )
+    this.removeItem(target)
   }
 
-  public toggleCompleted (id: number): void {
+  public toggleCompleted (target: HTMLElement, id: number): void {
     this.todoData = this.todoData.map( (item: ITodoData) => {
       if (item.id === id ) {
         item.completed = !item.completed

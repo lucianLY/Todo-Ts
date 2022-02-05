@@ -46,24 +46,33 @@ import TodoEvent from './js/todoEvent'
     const val: string = oInput.value.trim()
     console.log('val =>', val)
     if (val.length) {
-      todoEvent.addTodo(<ITodoData>{
+      const result = todoEvent.addTodo(<ITodoData>{
         id: 5,
-        content: '七七',
+        content: val,
         completed: true
       })
+
+      if (result === 1001) {
+        alert('列表项已存在')
+      }
+
     }
-    console.log(todoData)
+    oInput.value = ''
   }
 
   function  handleListclick (e: MouseEvent): void {
     const tar = e.target as HTMLElement
-    const tagName = tar.tagName
+    
+    const tagName = tar.tagName.toLowerCase()
+    console.log('tar =>', tar)
     if (tagName === 'input' || tagName === 'button') {
-      console.log(tagName)
+      const id = parseInt(tar.dataset.id)
       switch (tagName) {
         case 'input':
+          todoEvent.toggleCompleted(tar, id)
           break;
         case 'button':
+          todoEvent.removeTodo(tar, id)
           break
       }
     }
@@ -72,4 +81,3 @@ import TodoEvent from './js/todoEvent'
   init()
 
 })(document)
-console.log(1)

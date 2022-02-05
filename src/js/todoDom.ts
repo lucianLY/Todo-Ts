@@ -1,6 +1,6 @@
 import TodoTemplate from "./todoTemplate"
 import { ITodoData } from "./typings"
-import {findParentNode} from './utils'
+import {findParentNode, createItem} from './utils'
 
 class TodoDom extends TodoTemplate{
   private todoWapper: HTMLElement
@@ -10,10 +10,19 @@ class TodoDom extends TodoTemplate{
     this.todoWapper = todoWapper
   }
 
-  public addItem (todo: ITodoData): void {
-    const oItem: HTMLElement = document.createElement('div')
-    oItem.className = 'todo-item'
-    oItem.innerHTML = this.todoView(todo)
+  protected initList (todoData: ITodoData[]): void {
+    if (todoData.length > 0) {
+      const  oFrag: DocumentFragment = document.createDocumentFragment()
+      todoData.map( (todo: ITodoData) => {
+        const oItem: HTMLElement = createItem('div','todo-item', this.todoView(todo))
+        oFrag.appendChild(oItem)
+      })
+      this.todoWapper.appendChild(oFrag)
+    }
+  }
+
+  protected addItem (todo: ITodoData): void {
+    const oItem: HTMLElement = createItem('div','todo-item', this.todoView(todo))
     this.todoWapper.appendChild(oItem)
   }
 
@@ -23,8 +32,8 @@ class TodoDom extends TodoTemplate{
   }
 
   public changeCompleted (target: HTMLElement, completed: boolean): void{
-    const oParentNode:HTMLElement = findParentNode(target, 'todo-item')
-    const oContent = oParentNode.getElementsByTagName('span')[0]
+    const oParentNode: HTMLElement = findParentNode(target, 'todo-item')
+    const oContent: HTMLElement = oParentNode.getElementsByTagName('span')[0]
     oContent.style.textDecoration = 'none'
   }
 }
