@@ -9,28 +9,7 @@ import TodoEvent from './js/todoEvent'
   const oTodoList: HTMLDivElement = document.querySelector('.todo-list')
 
 
-  const todoData: ITodoData[] = [
-    {
-      id: 1, 
-      content: '张三',
-      completed: true
-    },
-    {
-      id: 2, 
-      content: '李四',
-      completed: true
-    },
-    {
-      id: 3, 
-      content: '王五',
-      completed: true
-    },
-    {
-      id: 4, 
-      content: '赵六',
-      completed: true
-    }
-  ] 
+  const todoData: ITodoData[] = [] 
 
   const init = () : void => {
     bindEvent()
@@ -44,10 +23,9 @@ import TodoEvent from './js/todoEvent'
 
   function handleAddBtnclick (): void {
     const val: string = oInput.value.trim()
-    console.log('val =>', val)
     if (val.length) {
       const result = todoEvent.addTodo(<ITodoData>{
-        id: 5,
+        id: new Date.getTime(),
         content: val,
         completed: true
       })
