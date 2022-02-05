@@ -1,11 +1,8 @@
 ## 传统做法
-1.绑定事件处理  -- 数据
-  1.增加
-    增加列表数据 { id, content, timestamp, completed: false}
-  2.删除
-    根据id remove 列表数据
-  3.改变
-    根据id 改变 completed: true
+1. 绑定事件处理  -- 数据
+  1. 增加 增加列表数据 { id, content, timestamp, completed: false}
+  2. 删除 根据id remove 列表数据
+  3. 改变 根据id 改变 completed: true
 
 
 
@@ -18,4 +15,4 @@
   
 
 ## Todo-Ts
-1. 
+
