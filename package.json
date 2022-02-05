@@ -1,16 +1,11 @@
 {
   "name": "TODO-TS",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
   "scripts": {
     "dev": "vite",
-    "server": "ts-node-dev ./server/app.ts",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "server": "ts-node-dev ./server/app.ts"  
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "devDependencies": {
     "vite": "^2.7.13"
   },
